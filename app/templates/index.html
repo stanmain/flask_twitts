@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block app_content %}
+<form action="save" method="post">
+  <div class="h1">Здравствуй {{ current_user.username }}
+    {{ wtf.quick_form(form) }}
+  </div>
+</form>
+{% for twitt in twitts %}
+<div class="panel panel-default" id="{{ loop.index }}">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      {{ moment(twitt.created_at).format('LLL') }}
+      <a href="{{ twitt.url }}">({{ twitt.id }})</a>
+      {% if twitt.id in twitt_in %}
+      [Сохранено]
+      {% endif %}
+    </h3>
+  </div>
+  <div class="panel-body">
+    {{ twitt.text }}
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
